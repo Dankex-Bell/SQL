@@ -365,30 +365,50 @@ DELIMITER ;
 SELECT FN_TOTAL_GASTADO_POR_CLIENTE (33786512);
 SELECT FN_PRECIO_PROMEDIO_DE_VENTA('2023-02') AS PRECIO_PROMEDIO;
 
+----Este procedimiento ordena los clientes por provincia----
 DELIMITER //
-CREATE PROCEDURE SP_ACTUALIZAR_PRECIOS_PANTALONES()
+CREATE PROCEDURE SP_OrdenarTabla_Clientes (
+    IN CampoDeOrdenamiento VARCHAR(50),  -- Parámetro para el campo de ordenamiento
+    IN Orden BOOLEAN)                                                 -- Parámetro para el orden (ascendente o descendente
 BEGIN
-UPDATE PRECIO_VENTA
-SET PRECIO = PRECIO * 1.20
-WHERE ID_PRODUCTO IN (
-SELECT ID_PRODUCTO
-FROM PRODUCTO
-WHERE CATEGORIA = 'Parte Abajo' AND SUBCATEGORIA ='Pantalon'
-);
+
+    SET @query = CONCAT('SELECT ID_DNI, USUARIO, PROVINCIA FROM clientes ORDER BY ' , CampoDeOrdenamiento ,  IF(Orden, ' ASC', ' DESC'));
+
+PREPARE consulta FROM @query;
+EXECUTE consulta;
+DEALLOCATE PREPARE consulta;
+
 END //
+
 DELIMITER ;
 
-CALL SP_ACTUALIZAR_PRECIOS_PANTALONES ();
+---PARA EJECUTARLO---
+CALL SP_OrdenarTabla_Clientes ('PROVINCIA', 1); ---Orden ASCENDENTE---
+CALL SP_OrdenarTabla_Clientes ('PROVINCIA', 0); ---Orden DESCENDENTE---
 
-SELECT * FROM PRECIO_VENTA WHERE ID_PRODUCTO = 2;
+-----El siguiente procedimiento inserta un registro de cliente----
 
 DELIMITER //
-CREATE PROCEDURE SP_CONTAR_PRODUCTOS_POR_CATEGORIA()
-BEGIN 
-SELECT CATEGORIA, COUNT(*) AS CANTIDAD
-FROM PRODUCTO
-GROUP BY CATEGORIA;
+CREATE PROCEDURE SP_Insertar_Cliente (
+    IN DNI INT(11),
+    IN DIRECCION VARCHAR(50),
+    IN NOMBRE_APELLIDO VARCHAR(50),
+    IN PROVINCIA VARCHAR (50))                    
+BEGIN
+
+    SET @query = CONCAT('INSERT INTO feria_placarcito.clientes (ID_DNI, DIRECCION, USUARIO, PROVINCIA) VALUES (', DNI, ', "', DIRECCION, '", "', NOMBRE_APELLIDO, '", "', PROVINCIA, '")');
+    
+PREPARE consulta FROM @query;
+EXECUTE consulta;
+DEALLOCATE PREPARE consulta;
+
 END //
+
 DELIMITER ;
 
-CALL SP_CONTAR_PRODUCTOS_POR_CATEGORIA ();
+-----Para ejecutarlo y ver que se agregó el nuevo cliente----
+
+CALL SP_Insertar_Cliente (21424069, 'Mitre 481', 'Pepito Boton', 'Buenos Aires');
+SELECT * FROM CLIENTES;
+
+
