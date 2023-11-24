@@ -1,0 +1,19 @@
+Para la instalacion correcta de la base de datos correspondiente a feria_placarcito primero debes ingresar al link https://github.com/Dankex-Bell/SQL.git donde se encuentran los archivos en SQL y
+
+luego debes ejecutar los siguientes pasos/archivos en el siguiente orden:
+
+1- 00_Creacion_Placarcito: En este archivo se creara la base de datos y las tablas.
+
+2- 01_Insert_Data: Este archivo contiene la inserciones de los datos para las tablas previamente creadas.
+
+3- 02_Vistas: En este archivo podemos ver la creacion las 2 vistas de la base de datos.
+
+4- 03_Funciones: En este archivo se crearan las 2 funciones que corresponden a la base de datos.
+
+5- 04_Store_Procedure: En este archivo se crearan los 2 procedimientos.
+
+6- 05_Triggers: En este archivo podemos observar la creacion de las dos tablas de auditoria y los 2 triggers para la base de datos.
+
+7- 06_Usuarios_Permisos: En este archivo podemos ver la creacion de los usuarios y darles los permisos a cada uno con relacion a nuestra base de datos.
+
+8- 07_Transacciones: En este archivo podemos visualizar, iniciando una transaccion, una sentencia de modificacion hacia algunas de las tablas.
