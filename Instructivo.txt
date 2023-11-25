@@ -6,7 +6,7 @@ luego debes ejecutar los siguientes pasos/archivos en el siguiente orden:
 
 2- 01_Insert_Data: Este archivo contiene la inserciones de los datos para las tablas previamente creadas.
 
-3- 02_Vistas: En este archivo podemos ver la creacion las 2 vistas de la base de datos.
+3- 02_Vistas: En este archivo podemos ver la creacion las 3 vistas de la base de datos.
 
 4- 03_Funciones: En este archivo se crearan las 2 funciones que corresponden a la base de datos.
 
